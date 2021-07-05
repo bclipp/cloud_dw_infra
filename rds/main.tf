@@ -52,7 +52,7 @@ resource "aws_security_group" "rds" {
 resource "aws_db_instance" "datawarehouse" {
   identifier             = "datawarehouse"
   instance_class         = "db.t3.small"
-  allocated_storage      = 5
+  allocated_storage      = 20
   engine                 = "sqlserver-ex"
   engine_version         = "15.00.4073.23.v1"
   username               = "dw_admin"
