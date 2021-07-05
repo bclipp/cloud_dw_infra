@@ -9,9 +9,11 @@ module "vpc" {
   version = "2.77.0"
 
   name                 = "datawarhouse"
-  cidr                 = "10.0.0.0/16"
+  cidr                 = "10.99.0.0/18"
   azs                  = data.aws_availability_zones.available.names
-  public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  public_subnets       = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
+  private_subnets      = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
+  database_subnets     = ["10.99.7.0/24", "10.99.8.0/24", "10.99.9.0/24"]
   enable_dns_hostnames = true
   enable_dns_support   = true
 }
@@ -30,10 +32,11 @@ resource "aws_security_group" "rds" {
   vpc_id = module.vpc.vpc_id
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+   from_port   = 1433
+   to_port     = 1433
+   protocol    = "tcp"
+   description = "SqlServer access from within VPC"
+   cidr_blocks = module.vpc.vpc_cidr_block
   }
 
   egress {
