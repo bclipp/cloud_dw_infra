@@ -60,7 +60,7 @@ resource "aws_db_parameter_group" "datawarehouse" {
 
 resource "aws_db_instance" "datawarehouse" {
   identifier             = "datawarehouse"
-  instance_class         = "db.t3.micro"
+  instance_class         = "db.t3.small"
   allocated_storage      = 5
   engine                 = "sqlserver-ex"
   engine_version         = "15.00.4073.23.v1"
