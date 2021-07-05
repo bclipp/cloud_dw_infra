@@ -16,17 +16,17 @@ module "vpc" {
   enable_dns_support   = true
 }
 
-resource "aws_db_subnet_group" "data_warhouse" {
-  name       = "data_warhouse"
+resource "aws_db_subnet_group" "datawarehouse" {
+  name       = "datawarehouse"
   subnet_ids = module.vpc.public_subnets
 
   tags = {
-    Name = "data_warhouse"
+    Name = "datawarehouse"
   }
 }
 
 resource "aws_security_group" "rds" {
-  name   = "data_warhouse_rds"
+  name   = "datawarehouse_rds"
   vpc_id = module.vpc.vpc_id
 
   ingress {
@@ -44,12 +44,12 @@ resource "aws_security_group" "rds" {
   }
 
   tags = {
-    Name = "data_warhouse_rds"
+    Name = "datawarehouse_rds"
   }
 }
 
-resource "aws_db_parameter_group" "data_warhouse" {
-  name   = "data_warhouse"
+resource "aws_db_parameter_group" "datawarehouse" {
+  name   = "datawarehouse"
   family = "postgres13"
 
   parameter {
@@ -58,17 +58,17 @@ resource "aws_db_parameter_group" "data_warhouse" {
   }
 }
 
-resource "aws_db_instance" "data_warhouse" {
-  identifier             = "data_warhouse"
+resource "aws_db_instance" "datawarehouse" {
+  identifier             = "datawarehouse"
   instance_class         = "db.t3.micro"
   allocated_storage      = 5
   engine                 = "sqlserver-ex"
   engine_version         = "15.00.4073.23.v1"
   username               = "dw_admin"
   password               = var.db_password
-  db_subnet_group_name   = aws_db_subnet_group.data_warhouse.name
+  db_subnet_group_name   = aws_db_subnet_group.datawarehouse.name
   vpc_security_group_ids = [aws_security_group.rds.id]
-  parameter_group_name   = aws_db_parameter_group.data_warhouse.name
+  parameter_group_name   = aws_db_parameter_group.datawarehouse.name
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
