@@ -48,15 +48,6 @@ resource "aws_security_group" "rds" {
   }
 }
 
-resource "aws_db_parameter_group" "datawarehouse" {
-  name   = "datawarehouse"
-  family = "postgres13"
-
-  parameter {
-    name  = "log_connections"
-    value = "1"
-  }
-}
 
 resource "aws_db_instance" "datawarehouse" {
   identifier             = "datawarehouse"
