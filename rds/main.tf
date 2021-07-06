@@ -36,7 +36,7 @@ resource "aws_security_group" "rds" {
    to_port     = 1433
    protocol    = "tcp"
    description = "SqlServer access from within VPC"
-   cidr_blocks = module.vpc.cidr
+   cidr_blocks = module.vpc.vpc_cidr_block
   }
 
   egress {
