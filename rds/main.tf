@@ -65,3 +65,41 @@ resource "aws_db_instance" "datawarehouse" {
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
+
+
+
+
+data "aws_iam_policy_document" "lambda_policy" {
+  statement {
+    effect = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
+
+resource "aws_iam_role" "aws_lambda_role" {
+  name = "iam_for_lambda"
+
+  assume_role_policy = data.aws_iam_policy_document.lambda_policy.json
+}
+
+module "lambda_function_from_container_image" {
+  source = "../../"
+
+  function_name = "etl_lambda"
+  description   = "used for ETL"
+
+  create_package = false
+
+  image_uri    = ...
+  package_type = "Image"
+}
+
+# ECR
+
+
