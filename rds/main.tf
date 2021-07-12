@@ -96,8 +96,10 @@ module "lambda_function_from_container_image" {
 
   create_package = false
 
-  image_uri    = ...
+  image_uri    = "112437402463.dkr.ecr.us-east-2.amazonaws.com/my_tests/lambda-mlops-model:latest"
+  docker_image_uri = "112437402463.dkr.ecr.us-east-2.amazonaws.com/my_tests/lambda-mlops-model:latest"
   package_type = "Image"
+  lambda_role_arn = aws_iam_role.aws_lambda_role.arn
 }
 
 # ECR
